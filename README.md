@@ -7,6 +7,6 @@ AEO desenvolvido em grupo nas aulas do curso técnico de informática para inter
 - Gabriélly Teodoro da Silva;
 - Guilherme Brites;
 - Gustavo Henrique Cabral da Silva;
-- Nathalia Martin Côrrea.
+- Nathalia Martins Correa.
 ---
 
