@@ -9,4 +9,9 @@ AEO desenvolvido em grupo nas aulas do curso técnico de informática para inter
 - Gustavo Henrique Cabral da Silva;
 - Nathalia Martin Côrrea.
 ---
-
+### Divisão de tarefas
+- Crystoffer : Autores;
+- Gabriélly : Livros;
+- Gustavo : Emprestimos;
+- Guilherme : Categorias;
+- Nathalia : Editoras.
