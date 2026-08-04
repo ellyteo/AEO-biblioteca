@@ -3,10 +3,55 @@ import livros from '../repository/livros.js'
 
 const router = express.Router()
 
-router.get("/api/v1/livros", (req, res) => {
-    res.send({ livro : livros})
+router.get("/", (req, res) => {
+    res.send({ livro : livros })
 })
 
-router.get("/api/v1/livros/:id", (req, res) => {
-    const
+router.get("/:id", (req, res) => {
+    const id = req.params.id
+
+    const livro = livros.find(it => it.id == id)
+
+    if (!livro) {
+        res.send({ message: "Livro não encontrado" })
+        return
+    }
+
+    res.send({ livro })
 })
+
+router.get("/registrar", (req, res) => {
+    const { id, nome } = req.query
+    if(!id || !nome) {
+        res.send({ message: "Favor informar id e nome do livro" })
+        return 
+    }
+    livros.push({ id, nome })
+    res.send({ message: "Livro adicionada com sucesso" })
+})
+
+router.get("/alterar/:id", (req, res) => {
+    const id = req.params.id
+    const { nome } = req.query
+    const livro = livros.find(it => it.id == id)
+
+    if(!livro) {
+        res.send({ message: "Favor informar o id" })
+        return 
+    }
+    livro.nome = nome
+    res.send({ message: "Livro alterado com sucesso" })
+})
+
+router.get("/deletar/:id", (req, res) => {
+    const id = req.params.id
+    const livro = livros.find(it => it.id == id)
+    if(!livro) {
+        res.send({ message: "Favor informar id e name" })
+        return 
+    }
+    livros.splice(it => it.id == id, 1)
+    res.send({ message: "Livro deletado com sucesso" })
+})
+
+export default router
