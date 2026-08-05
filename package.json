@@ -1,0 +1,25 @@
+{
+  "name": "aeo-biblioteca",
+  "version": "1.0.0",
+  "description": "AEO desenvolvido em grupo nas aulas do curso técnico de informática para internet.",
+  "homepage": "https://github.com/ellyteo/AEO-biblioteca#readme",
+  "bugs": {
+    "url": "https://github.com/ellyteo/AEO-biblioteca/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellyteo/AEO-biblioteca.git"
+  },
+  "license": "ISC",
+  "author": "Guilherme Brites",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev" : "node --watch index.js"
+  },
+  "dependencies": {
+    "vite": "^8.2.0"
+  },
+  "devDependencies": {}
+}
