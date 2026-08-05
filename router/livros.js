@@ -7,6 +7,18 @@ router.get("/", (req, res) => {
     res.send({ livro : livros })
 })
 
+router.get("/registrar", (req, res) => {
+    const { id, nome } = req.query
+    if(!id || !nome) {
+        res.send({ message: "Favor informar id e nome do livro" })
+        return 
+    }
+    livros.push({ id, nome })
+    console.log(livros)
+    
+    res.send({ message: "Livro adicionado com sucesso" })
+})
+
 router.get("/:id", (req, res) => {
     const id = req.params.id
 
@@ -18,16 +30,6 @@ router.get("/:id", (req, res) => {
     }
 
     res.send({ livro })
-})
-
-router.get("/registrar", (req, res) => {
-    const { id, nome } = req.query
-    if(!id || !nome) {
-        res.send({ message: "Favor informar id e nome do livro" })
-        return 
-    }
-    livros.push({ id, nome })
-    res.send({ message: "Livro adicionada com sucesso" })
 })
 
 router.get("/alterar/:id", (req, res) => {
