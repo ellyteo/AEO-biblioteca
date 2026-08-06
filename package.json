@@ -1,6 +1,6 @@
 {
   "name": "aeo-biblioteca",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "AEO desenvolvido em grupo nas aulas do curso técnico de informática para internet.",
   "homepage": "https://github.com/ellyteo/AEO-biblioteca#readme",
   "bugs": {
@@ -16,10 +16,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev" : "node --watch index.js"
+    "dev": "node --watch index.js"
   },
   "dependencies": {
+    "express": "^5.2.1",
     "vite": "^8.2.0"
-  },
-  "devDependencies": {}
+  }
 }
