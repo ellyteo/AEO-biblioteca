@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
     res.send({ editora : editoras })
 })
 
-router.get("/registrar", (req, res) => {
+router.get("/api/v1/registrar", (req, res) => {
     const { id, nome } = req.query
     if(!id || !nome) {
         res.send({ message: "Favor informar id e nome da editora" })
@@ -20,7 +20,7 @@ router.get("/registrar", (req, res) => {
     res.send({ message: "Editora adicionada com sucesso" })
 })
 
-router.get("/:id", (req, res) => {
+router.get("/api/v1/:id", (req, res) => {
     const id = req.params.id
 
     const editoras = editora.find(it => it.id == id)
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
     res.send({ editora })
 })
 
-router.get("/alterar/:id", (req, res) => {
+router.get("/api/v1/alterar/:id", (req, res) => {
     const id = req.params.id
     const { nome } = req.query
     const editoras = editora.find(it => it.id == id)
@@ -46,7 +46,7 @@ router.get("/alterar/:id", (req, res) => {
     res.send({ message: "Editora alterada com sucesso" })
 })
 
-router.get("/deletar/:id", (req, res) => {
+router.get("/api/v1/deletar/:id", (req, res) => {
     const id = req.params.id
     const editoras = editora.find(it => it.id == id)
     if(!editoras) {
