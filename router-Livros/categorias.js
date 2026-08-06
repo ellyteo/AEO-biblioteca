@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
         return
     }
  
-    res.send({ categorias })
+    res.send({ categoria })
 })
  
 router.get("/alterar/:id", (req, res) => {
