@@ -15,3 +15,6 @@ AEO desenvolvido em grupo nas aulas do curso técnico de informática para inter
 - Gustavo : Emprestimos;
 - Guilherme : Categorias;
 - Nathalia : Editoras.
+
+
+conjunto de dados relacionados entre si 
