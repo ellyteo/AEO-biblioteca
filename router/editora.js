@@ -1,0 +1,60 @@
+import express from 'express'
+import editora from '../repository/editora'
+
+
+const router = express.Router()
+
+router.get("/", (req, res) => {
+    res.send({ editora : editoras })
+})
+
+router.get("/api/v1/registrar", (req, res) => {
+    const { id, nome } = req.query
+    if(!id || !nome) {
+        res.send({ message: "Favor informar id e nome da editora" })
+        return 
+    }
+    editora.push({ id, nome })
+    console.log(editora)
+    
+    res.send({ message: "Editora adicionada com sucesso" })
+})
+
+router.get("/api/v1/:id", (req, res) => {
+    const id = req.params.id
+
+    const editoras = editora.find(it => it.id == id)
+
+    if (!editoras) {
+        res.send({ message: "Editora não encontrada" })
+        return
+    }
+
+    res.send({ editora })
+})
+
+router.get("/api/v1/alterar/:id", (req, res) => {
+    const id = req.params.id
+    const { nome } = req.query
+    const editoras = editora.find(it => it.id == id)
+
+    if(!editoras) {
+        res.send({ message: "Favor informar o id" })
+        return 
+    }
+    editora.nome = nome
+    res.send({ message: "Editora alterada com sucesso" })
+})
+
+router.get("/api/v1/deletar/:id", (req, res) => {
+    const id = req.params.id
+    const editoras = editora.find(it => it.id == id)
+    if(!editoras) {
+        res.send({ message: "Favor informar id e name" })
+        return 
+    }
+    editora.splice(it => it.id == id, 1)
+    res.send({ message: "Editora deletada com sucesso" })
+})
+
+export default router

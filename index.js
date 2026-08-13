@@ -1,18 +1,14 @@
 import express from 'express'
-import livro from './router-Livros/livros.js'
-import emprestimo from './router-Livros/emprestimos.js'
-import autor from './router-Livros/autores.js'
-
-import categoria from './router-Livros/categorias.js'
+import editora from './repository/editora';
 
 const app = express()
+
 app.use(express.json())
 
-app.use('/api/v1/livro', livro)
-app.use('/api/v1/emprestimo',emprestimo)
-app.use('/api/v1/categoria', categoria )
-app.use('/api/v1/autor', autor)
+app.use('/api/v1/registrar/editora', editora)
+app.use('/api/v1/alterar/editora', editora)
+app.use('/api/v1/deletar/editora', editora)
 
-app.listen(3000, () => {
-    console.log("Servidor escutando na porta 3000")
-})
+app.listen(3000,() => {
+    console.log("bah ta funcionando 3000")
+});
