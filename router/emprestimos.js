@@ -28,8 +28,8 @@ router.get("/:id", (req, res) => {
     res.send({ emprestimo })
 })
 router.post("/alterar/:id", (req, res) => {
-    const id = req.body.id
-    const { livro ,dataRequisicao , dataDevolucao } = req.query
+    const id = req.params.id
+    const { livro ,dataRequisicao , dataDevolucao } = req.body
     const emprestimo = emprestimos.find(it => it.id == id)
     if(!emprestimo) {
         res.send({ message: "Favor informar o id" })

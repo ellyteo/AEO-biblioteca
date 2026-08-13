@@ -34,8 +34,8 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/alterar/:id", (req, res) => {
-    const id = req.body.id
-    const { nome } = req.query
+    const id = req.params.id
+    const { nome } = req.body
     const autor = autores.find(it => it.id == id)
 
     if(!autor) {
