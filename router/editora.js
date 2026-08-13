@@ -4,8 +4,8 @@ import editoras from '../repository/editora.js'
 
 const router = express.Router()
 
-router.get("/", (req, res) => {
-    res.send({ editora : editoras })
+router.get("/buscar", (req, res) => {
+    res.send({ message : editoras })
 })
 
 router.post("/registrar", (req, res) => {
@@ -23,22 +23,22 @@ router.post("/registrar", (req, res) => {
 router.get("/:id", (req, res) => {
     const id = req.params.id
 
-    const editoras = editora.find(it => it.id == id)
+    const editora = editoras.find(it => it.id == id)
 
-    if (!editoras) {
+    if (!id) {
         res.send({ message: "Editora não encontrada" })
         return
     }
 
-    res.send({ editora })
+    res.send({ message: editora })
 })
 
 router.post("/alterar/:id", (req, res) => {
     const id = req.body.id
     const { nome } = req.query
-    const editoras = editora.find(it => it.id == id)
+    const editora = editoras.find(it => it.id == id)
 
-    if(!editoras) {
+    if(!editora) {
         res.send({ message: "Favor informar o id" })
         return 
     }
@@ -48,7 +48,7 @@ router.post("/alterar/:id", (req, res) => {
 
 router.post("/deletar/:id", (req, res) => {
     const id = req.body.id
-    const editoras = editora.find(it => it.id == id)
+    const editora = editoras.find(it => it.id == id)
     if(!editoras) {
         res.send({ message: "Favor informar id e name" })
         return 
