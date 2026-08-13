@@ -15,7 +15,6 @@ router.post("/registrar", (req, res) => {
         return 
     }
     editoras.push({ id, nome })
-    console.log(editora)
     
     res.send({ message: "Editora adicionada com sucesso" })
 })

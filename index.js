@@ -9,7 +9,7 @@ const app = express()
 
 app.use(express.json())
 
-app.use('/api/v1/editora', editoras)
+app.use('/api/v1/editoras', editoras)
 app.use('/api/v1/autores', autores)
 app.use('/api/v1/categorias', categorias)
 app.use('/api/v1/emprestimos', emprestimos)

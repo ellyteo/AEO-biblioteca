@@ -9,7 +9,7 @@ AEO desenvolvido em grupo nas aulas do curso técnico de informática para inter
 - Nathalia Martins Correa.
 ---
 ### Divisão de tarefas
-- Gabriélly : Livros;
-- Gustavo : Emprestimos;
+- Gabriélly : Livros, Autores;
+- Gustavo : Emprestimos, Autores;
 - Guilherme : Categorias;
-- Nathalia : Editoras, Autores;
+- Nathalia : Editoras;
