@@ -3,15 +3,13 @@ AEO desenvolvido em grupo nas aulas do curso técnico de informática para inter
 
 ---
 ### Integrantes do grupo
--   Crystoffer Lima Araujo;
 - Gabriélly Teodoro da Silva;
 - Guilherme Brites;
 - Gustavo Henrique Cabral da Silva;
 - Nathalia Martins Correa.
 ---
 ### Divisão de tarefas
-- Crystoffer : Autores;
 - Gabriélly : Livros;
 - Gustavo : Emprestimos;
 - Guilherme : Categorias;
-- Nathalia : Editoras.
+- Nathalia : Editoras, Autores;
