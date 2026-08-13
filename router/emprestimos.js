@@ -1,5 +1,5 @@
 import express from 'express'
-import emprestimos from '../repository-Livros/emprestimos.js';
+import emprestimos from '../repository/emprestimos.js';
 
 const router = express.Router();
 

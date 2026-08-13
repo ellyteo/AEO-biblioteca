@@ -1,5 +1,5 @@
 import express from 'express'
-import autores from '../repository-Livros/autores.js'
+import autores from '../repository/autores.js'
 
 
 const router = express.Router();

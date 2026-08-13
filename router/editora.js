@@ -1,5 +1,5 @@
 import express from 'express'
-import editora from '../repository/editora'
+import editoras from '../repository/editora.js'
 
 
 const router = express.Router()
@@ -8,19 +8,19 @@ router.get("/", (req, res) => {
     res.send({ editora : editoras })
 })
 
-router.get("/api/v1/registrar", (req, res) => {
-    const { id, nome } = req.query
+router.post("/registrar", (req, res) => {
+    const { id, nome } = req.body
     if(!id || !nome) {
         res.send({ message: "Favor informar id e nome da editora" })
         return 
     }
-    editora.push({ id, nome })
+    editoras.push({ id, nome })
     console.log(editora)
     
     res.send({ message: "Editora adicionada com sucesso" })
 })
 
-router.get("/api/v1/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     const id = req.params.id
 
     const editoras = editora.find(it => it.id == id)
@@ -33,8 +33,8 @@ router.get("/api/v1/:id", (req, res) => {
     res.send({ editora })
 })
 
-router.get("/api/v1/alterar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/alterar/:id", (req, res) => {
+    const id = req.body.id
     const { nome } = req.query
     const editoras = editora.find(it => it.id == id)
 
@@ -46,8 +46,8 @@ router.get("/api/v1/alterar/:id", (req, res) => {
     res.send({ message: "Editora alterada com sucesso" })
 })
 
-router.get("/api/v1/deletar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/deletar/:id", (req, res) => {
+    const id = req.body.id
     const editoras = editora.find(it => it.id == id)
     if(!editoras) {
         res.send({ message: "Favor informar id e name" })

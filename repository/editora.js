@@ -1,3 +1,3 @@
-const editora = []
+const editoras = []
 
-export default editora
+export default editoras

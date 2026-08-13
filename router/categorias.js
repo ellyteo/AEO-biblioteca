@@ -1,5 +1,5 @@
 import express from 'express'
-import categorias from '../repository-Livros/categorias.js'
+import categorias from '../repository/categorias.js'
  
 const router = express.Router()
  
