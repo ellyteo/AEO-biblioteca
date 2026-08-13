@@ -7,8 +7,8 @@ router.get("/", (req, res) => {
     res.status(200).send({emprestimo : emprestimos});
 });
 
-router.get("/registrar", (req, res) => {
-    const { id, livro, dataRequisicao, dataDevolucao } = req.query
+router.post("/registrar", (req, res) => {
+    const { id, livro, dataRequisicao, dataDevolucao } = req.body
     if(!id || !livro || !dataRequisicao || !dataDevolucao) {
         res.send({ message: "Favor informar id , o livro , a Data de requisicao , e Data de devolucao do emprestimo" })
         return 
@@ -27,8 +27,8 @@ router.get("/:id", (req, res) => {
     }
     res.send({ emprestimo })
 })
-router.get("/alterar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/alterar/:id", (req, res) => {
+    const id = req.body.id
     const { livro ,dataRequisicao , dataDevolucao } = req.query
     const emprestimo = emprestimos.find(it => it.id == id)
     if(!emprestimo) {
@@ -38,8 +38,8 @@ router.get("/alterar/:id", (req, res) => {
     emprestimo.livro = livro
     res.send({ message: "Emprestimo alterado com sucesso" })
 })
-router.get("/deletar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/deletar/:id", (req, res) => {
+    const id = req.body.id
     const emprestimo = emprestimos.find(it => it.id == id)
     if(!emprestimo) {
         res.send({ message: "Favor informar id e name" })

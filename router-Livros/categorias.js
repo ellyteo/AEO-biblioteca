@@ -7,8 +7,8 @@ router.get("/", (req, res) => {
     res.send({ categoria: categorias })
 })
  
-router.get("/registrar", (req, res) => {
-    const { id, nome } = req.query
+router.post("/registrar", (req, res) => {
+    const { id, nome } = req.body
     if(!id || !nome) {
         res.send({ message: "Favor informar categorias e nome do livro" })
         return
@@ -32,8 +32,8 @@ router.get("/:id", (req, res) => {
     res.send({ categoria })
 })
  
-router.get("/alterar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/alterar/:id", (req, res) => {
+    const id = req.body.id
     const { nome } = req.query
     const categoria = categorias.find(it => it.id == id)
  
@@ -45,8 +45,8 @@ router.get("/alterar/:id", (req, res) => {
     res.send({ message: "Categoria alterado com sucesso" })
 })
  
-router.get("/deletar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/deletar/:id", (req, res) => {
+    const id = req.body.id
     const categorias = categorias.find(it => it.id == id)
     if(!categorias) {
         res.send({ message: "Favor informar id e name" })

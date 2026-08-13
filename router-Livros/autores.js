@@ -8,8 +8,8 @@ router.get("/", (req, res) => {
     res.send({ autor : autores })
 })
 
-router.get("/registrar", (req, res) => {
-    const { id, nome } = req.query
+router.post("/registrar", (req, res) => {
+    const { id, nome } = req.body
     if(!id || !nome) {
         res.send({ message: "Favor informar id e nome do autor" })
         return 
@@ -33,8 +33,8 @@ router.get("/:id", (req, res) => {
     res.send({ autor })
 })
 
-router.get("/alterar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/alterar/:id", (req, res) => {
+    const id = req.body.id
     const { nome } = req.query
     const autor = autores.find(it => it.id == id)
 
@@ -46,8 +46,8 @@ router.get("/alterar/:id", (req, res) => {
     res.send({ message: "autor alterado com sucesso" })
 })
 
-router.get("/deletar/:id", (req, res) => {
-    const id = req.params.id
+router.post("/deletar/:id", (req, res) => {
+    const id = req.body.id
     const autor = autores.find(it => it.id == id)
     if(!autor) {
         res.send({ message: "Favor informar id e name" })
