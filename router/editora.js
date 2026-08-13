@@ -4,7 +4,7 @@ import editoras from '../repository/editora.js'
 
 const router = express.Router()
 
-router.get("/buscar", (req, res) => {
+router.get("/", (req, res) => {
     res.send({ message : editoras })
 })
 
