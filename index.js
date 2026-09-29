@@ -1,4 +1,5 @@
 import express from 'express'
+import database from './config/livros.js'
 import editoras from './router/editora.js';
 import autores from './router/autores.js';
 import categorias from './router/categorias.js';
@@ -15,6 +16,13 @@ app.use('/api/v1/categorias', categorias)
 app.use('/api/v1/emprestimos', emprestimos)
 app.use('/api/v1/livros', livros)
 
-app.listen(3000,() => {
-    console.log("funcionando na porta 3000")
-});
+database.db
+    .sync({ force: false })
+    .then((_) => {
+        app.listen(3000, () => {
+            console.log("Servidor ouvindo na porta 3000")
+        })
+    })
+    .catch((e) => {
+        console.log(e)
+    })
