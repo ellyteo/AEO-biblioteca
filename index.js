@@ -1,5 +1,5 @@
 import express from 'express'
-import database from './config/database.js'
+import database from './config/livros.js'
 import editoras from './router/editora.js';
 import autores from './router/autores.js';
 import categorias from './router/categorias.js';
