@@ -3,9 +3,9 @@ import biliotecario from "../model/bibliotecario.js"
 class RepositoryBiblio {
 
     async Find() {
-        const biblio = await biliotecario.findAll()
+        const biblioS = await biliotecario.findAll()
 
-        return biblio
+        return biblioS
     }
 
     async FindById(id) {
@@ -14,8 +14,8 @@ class RepositoryBiblio {
         return biblioDetalhes
     }
 
-     async FindByNome(nome) {
-        return biblio.findOne({ where: {nome } })
+    async FindByNome(nome) {
+        return biblio.findOne({ where: { nome } })
     }
 
     async Create(nome) {
@@ -27,25 +27,29 @@ class RepositoryBiblio {
     async Update(id, nome) {
         const biblioAlterar = await biliotecario.findByPk(id)
 
-        if(!biblioAlterar) {
+        if (!biblioAlterar) {
             throw new Error("Bibliotecario não encontrado")
         }
 
         biblioAlterar.nome = nome || biblioAlterar.nome
-       
+
         await biblioAlterar.save()
     }
 
     async Delete(id) {
         const biblioDeletar = await biliotecario.findByPk(id)
 
-        if(!biblioDeletar){
+        if (!biblioDeletar) {
             throw new Error("Bibliotecario não encontrado")
         }
 
         await biblioDeletar.destroy()
 
         return biblioDeletar
+    }
+
+    async FindByEmail(email) {
+        return livro.findOne({ where: { email } })
     }
 
 }

@@ -1,8 +1,9 @@
 import express from "express"
 import ControllerBiblio from "../controller/bibliotecario.js"
+import authMiddleware from '../middleware/auth.js'
 const router = express.Router()
 
-router.get("/buscar", ControllerBiblio.Buscar)
+router.get("/listar", authMiddleware, ControllerBiblio.Buscar)
 router.get("/detalhe/:id", ControllerBiblio.Detalhe)
 router.post("/criar", ControllerBiblio.Criar)
 router.put("/alterar/:id", ControllerBiblio.Alterar)

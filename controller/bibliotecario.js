@@ -1,7 +1,7 @@
 import Servicebiblio from '../service/bibliotecario.js'
 
 class ControllerBiblio {
-    
+
     async Buscar(_, res) {
         try {
             const bibliotecario = await Servicebiblio.Buscar()
@@ -32,7 +32,7 @@ class ControllerBiblio {
             const { nome } = req.body
 
             await Servicebiblio.Criar(nome)
-            
+
             res.status(201).send({ mensagem: "Cadastrado com sucesso" })
         } catch (error) {
             res.status(500).send({
@@ -43,22 +43,28 @@ class ControllerBiblio {
 
     async Login(req, res) {
         try {
-            const { id, nome } = req.body
-            const token = await Servicebiblio.Login(id, nome)
-            
-            res.status(200).send({ token })
+            const { email, senha } = req.body
+
+            const token = await ServiceUsuario.Login(email, senha)
+
+            res.status(200).send({
+                token
+            })
         } catch (error) {
-            res.status(500).send({ message: error.message })
+            res.status(500).send({
+                message: error.message
+            })
         }
+
     }
 
     async Alterar(req, res) {
         try {
-            const { nome } = req.body
             const id = req.params.id
+            const { nome } = req.body
 
             await Servicebiblio.Alterar(id, nome)
-            
+
             res.status(201).send({ mensagem: "Cadastrado com sucesso" })
         } catch (error) {
             res.status(500).send({

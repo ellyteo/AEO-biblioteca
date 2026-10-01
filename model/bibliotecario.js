@@ -9,7 +9,7 @@ class Bibliotecario {
                 autoIncrement: true
             },
             nome: {
-                type: database.db.Sequelize.INTEGER,
+                type: database.db.Sequelize.STRING,
                 allowNull: false
             }
         })

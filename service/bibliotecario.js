@@ -1,5 +1,7 @@
 import RepositoryBiblio from '../repository/bibliotecario.js'
 
+const segredo = 'S3gred0'
+
 class Servicebiblio {
 
     async Buscar(id) {
@@ -7,19 +9,19 @@ class Servicebiblio {
     }
 
     async Detalhe(id) {
-        if(!id) {
+        if (!id) {
             throw new Error("Favor informar o ID")
         }
 
         const biliotecario = await RepositoryBiblio.FindById(id)
-        
-        if(!biliotecario) {
+
+        if (!biliotecario) {
             throw new Error(`ID ${id} do bibliotecario não encontrado`)
         }
 
         return biliotecario
     }
-   
+
     async Criar(nome) {
         if (!nome) {
             throw new Error("Favor informar todos os dados")
@@ -30,14 +32,28 @@ class Servicebiblio {
         return bibliotecario
     }
 
-    async Login(id, nome) {
-        if(!id, nome) {
-            throw new Error("Favor informar todos os dados.")
+    async Login(email, senha) {
+        if (!email || !senha) {
+            throw new Error("Email ou senha inválido")
         }
 
-        const biblio = await RepositoryBiblio.FindByEmail(id)
+        const usuario = await RepositoreUsuario.FindByEmail(email)
 
-        
+        if (!usuario) {
+            throw new Error("Email ou senha inválido")
+        }
+
+        if (
+            !(await bcrypt.compare(String(senha), usuario.senha))
+        ) {
+            throw new Error("Email ou senha inválido")
+        }
+
+        return jwt.sign(
+            { id: usuario.id, email },
+            segredo,
+            { expiresIn: 60 * 60 }
+        )
     }
 
     async Alterar(id, nome) {
@@ -46,7 +62,7 @@ class Servicebiblio {
         }
 
         const biblioAlterado = await RepositoryBiblio.Update(id, nome)
-        
+
         return biblioAlterado
     }
 
@@ -54,7 +70,7 @@ class Servicebiblio {
         if (!id) {
             throw new Error("Favor informar o ID")
         }
-        
+
         const biblio = await RepositoryBiblio.Delete(id)
 
         return biblio
