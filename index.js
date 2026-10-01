@@ -1,6 +1,6 @@
 import express from 'express'
-import database from './config/livros.js'
-import editoras from './router/editora.js';
+import database from './config/database.js'
+import bibliotecario from './router/bibliotecario.js';
 import autores from './router/autores.js';
 import categorias from './router/categorias.js';
 import emprestimos from './router/emprestimos.js';
@@ -10,7 +10,7 @@ const app = express()
 
 app.use(express.json())
 
-app.use('/api/v1/editoras', editoras)
+app.use('/api/v1/bibliotecario', bibliotecario)
 app.use('/api/v1/autores', autores)
 app.use('/api/v1/categorias', categorias)
 app.use('/api/v1/emprestimos', emprestimos)
