@@ -15,13 +15,13 @@ class RepositoryLivro {
         return livroDetalhe
     }
 
-    async Create(nome) {
-        const livroCriar = await livro.create({ nome })
+    async Create(nome, autor, ano, editora ) {
+        const livroCriar = await livro.create({ nome, autor, ano, editora })
 
         return livroCriar
     }
 
-    async Update(id, nome) {
+    async Update(id, nome, autor, ano, editora) {
         const livroAlterar = await livro.findByPk(id)
 
         if (!livroAlterar) {
@@ -29,6 +29,9 @@ class RepositoryLivro {
         }
 
         livroAlterar.nome = nome
+        livroAlterar.autor = autor
+        livroAlterar.ano = ano
+        livroAlterar.editora = editora
 
         await livroAlterar.save()
     }

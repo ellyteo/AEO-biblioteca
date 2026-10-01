@@ -1,8 +1,8 @@
 import database from "../config/database.js"
 
-class Livros {
+class Categorias {
     constructor() {
-        this.model = database.db.define("livros", {
+        this.model = database.db.define("categorias", {
             id: {
                 type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
@@ -11,16 +11,16 @@ class Livros {
             nome: {
                 type: database.db.Sequelize.STRING
             },
-            autor: {
+            genero: {
                 type: database.db.Sequelize.STRING
             },
-            ano: {
-                type: database.db.Sequelize.INTEGER
-            },
-            editora: {
+            formato: {
                 type: database.db.Sequelize.STRING
             }
         })
+
+
+
     }
 }
-export default new Livros().model
+export default new Categorias ().model

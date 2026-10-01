@@ -22,22 +22,22 @@ class ServiceLivros {
         return livro
     }
 
-    async Criar(nome) {
-        if (!nome) {
+    async Criar(nome, autor, ano, editora) {
+        if (!nome || !autor || !ano || !editora) {
             throw new Error("Favor informar todos os dados!")
         }
 
-        const livro = await RepositoryLivros.Create(nome)
+        const livro = await RepositoryLivros.Create(nome, autor, ano, editora)
 
         return livro
     }
 
-    async Alterar(id, nome) {
-        if (!id || !nome) {
+    async Alterar(id, nome, autor, ano, editora) {
+        if (!id || !nome || !autor || !ano || !editora) {
             throw new Error("Favor informar o ID!")
         }
         
-        const livroAlterar = await RepositoryLivros.Update(id, nome)
+        const livroAlterar = await RepositoryLivros.Update(id, nome, autor, ano, editora)
 
         return livroAlterar
     }

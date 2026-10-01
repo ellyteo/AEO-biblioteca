@@ -1,11 +1,11 @@
-import ServiceLivros from '../service/livros.js'
+import ServiceCategorias from '../service/categorias.js'
 
-class ControllerLivros {
+class ControllerCategorias {
 
     async Buscar(_, res) {
         try {
-            const livros = await ServiceLivros.Buscar()
-            res.send({ message: livros })
+            const categorias = await ServiceCategorias.Buscar()
+            res.send({ message: categorias })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -17,9 +17,9 @@ class ControllerLivros {
         try {
             const id = req.params.id
 
-            const livro = await ServiceLivros.Detalhe(id)
+            const categoria = await ServiceCategorias.Detalhe(id)
 
-            res.send({ message: livro })
+            res.send({ message: categoria })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -29,9 +29,9 @@ class ControllerLivros {
 
     async Criar(req, res) {
         try {
-            const { nome, autor, ano, editora } = req.body
+            const { nome } = req.body
 
-            await ServiceLivros.Criar(nome, autor, ano, editora)
+            await ServiceCategorias.Criar(nome)
 
             res.send({ message: "Criado com sucesso!" })
         } catch (error) {
@@ -44,9 +44,9 @@ class ControllerLivros {
     async Alterar(req, res) {
         try {
             const id = req.params.id
-            const { nome, autor, ano, editora } = req.query
+            const { nome } = req.query
 
-            await ServiceLivros.Alterar(id, nome, autor, ano, editora)
+            await ServiceCategorias.Alterar(id, nome)
 
             res.send({ message: "Alterado com sucesso!" })
         } catch (error) {
@@ -60,7 +60,7 @@ class ControllerLivros {
         try {
             const id = req.params.id
 
-            await ServiceLivros.Deletar(id)
+            await ServiceCategorias.Deletar(id)
 
             res.send({ message: "Deletado!" })
         } catch (error) {
@@ -71,4 +71,4 @@ class ControllerLivros {
     }
 
 }
-export default new ControllerLivros()
+export default new ControllerCategorias()
