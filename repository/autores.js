@@ -15,13 +15,13 @@ class RepositoryAutores {
         return autorDetalhe
     }
 
-    async Create(nome) {
-        const autorCriar = await autor.create({ nome })
+    async Create(nome, idLivro) {
+        const autorCriar = await autor.create({ nome, idLivro })
 
         return autorCriar
     }
 
-    async Update(id, nome) {
+    async Update(id, nome, idLivro) {
         const autorAlterar = await autor.findByPk(id)
 
         if (!autorAlterar) {
@@ -29,6 +29,7 @@ class RepositoryAutores {
         }
 
         autorAlterar.nome = nome
+        autorAlterar.idLivro = idLivro
 
         await autorAlterar.save()
     }
@@ -44,10 +45,6 @@ class RepositoryAutores {
 
         return autorDeletar
     }
-
-    async FindByEmail(email) {
-        return autor.findOne({ where: { email } })
-    }
-
+    
 }
 export default new RepositoryAutores()

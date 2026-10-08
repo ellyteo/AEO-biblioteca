@@ -1,7 +1,5 @@
 import RepositoryAutores from '../repository/autores.js'
 
-const segredo = 'S3gred0'
-
 class ServiceAutores {
 
     async Buscar() {
@@ -10,7 +8,7 @@ class ServiceAutores {
 
     async Detalhe(id) {
         if (!id) {
-            throw new Error("Favpr informar o ID!")
+            throw new Error("Favor informar o ID!")
         }
 
         const autor = await RepositoryAutores.FindById(id)
@@ -22,22 +20,22 @@ class ServiceAutores {
         return autor
     }
 
-    async Criar(nome) {
-        if (!nome) {
+    async Criar(nome, idLivro) {
+        if (!nome || !idLivro) {
             throw new Error("Favor informar todos os dados!")
         }
 
-        const autor = await RepositoryAutores.Create(nome)
+        const autor = await RepositoryAutores.Create(nome, idLivro)
 
         return autor
     }
 
-    async Alterar(id, nome) {
-        if (!id || !nome) {
+    async Alterar(id, nome, idLivro) {
+        if (!id || !nome || !idLivro) {
             throw new Error("Favor informar o ID!")
         }
         
-        const autorAlterar = await RepositoryAutores.Update(id, nome)
+        const autorAlterar = await RepositoryAutores.Update(id, nome, idLivro)
 
         return autorAlterar
     }

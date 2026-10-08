@@ -15,23 +15,23 @@ class Repositoryemprestimos {
         return EmprestimoDetalhe
     }
 
-    async Create(livro, autor, datareq, datadev) {
-        const  emprestimoCriar = await emprestimo.create({ livro, autor, datareq, datadev })
+    async Create(idLivro, idAutor, requerimento, devolucao) {
+        const  emprestimoCriar = await emprestimo.create({ idLivro, idAutor, requerimento, devolucao })
 
         return  emprestimoCriar
     }
 
-    async Update(id, livro, autor, datareq, datadev) {
+    async Update(id, idLivro, idAutor, requerimento, devolucao) {
         const emprestimoAlterar = await emprestimo.findByPk(id)
 
         if (!emprestimoAlterar) {
             throw new Error("Usuário não encontrado!")
         }
 
-        emprestimoAlterar.livro = livro
-        emprestimoAlterar.autor = autor
-        emprestimoAlterar.datareq = datareq
-        emprestimoAlterar.datadev = datadev
+        emprestimoAlterar.idLivro = idLivro
+        emprestimoAlterar.idAutor = idAutor
+        emprestimoAlterar.requerimento = requerimento
+        emprestimoAlterar.devolucao = devolucao
 
         await emprestimoAlterar.save()
     }
@@ -46,10 +46,6 @@ class Repositoryemprestimos {
         await emprestimoDeletar.destroy()
 
         return emprestimoDeletar
-    }
-
-    async FindByEmail(email) {
-        return emprestimo.findOne({ where: { email } })
     }
 
 }

@@ -1,7 +1,5 @@
 import RepositoryEmprestimos from '../repository/emprestimos.js'
 
-const segredo = 'S3gred0'
-
 class ServiceEmprestimos {
 
     async Buscar() {
@@ -10,7 +8,7 @@ class ServiceEmprestimos {
 
     async Detalhe(id) {
         if (!id) {
-            throw new Error("Favpr informar o ID!")
+            throw new Error("Favor informar o ID!")
         }
 
         const emprestimo = await RepositoryEmprestimos.FindById(id)
@@ -22,22 +20,22 @@ class ServiceEmprestimos {
         return emprestimo
     }
 
-    async Criar(livro, autor, datareq, datadev) {
-        if (!livro || !autor || !datareq || !datadev) {
+    async Criar(idLivro, idAutor, requerimento, devolucao) {
+        if (!idLivro || !idAutor || !requerimento || !devolucao) {
             throw new Error("Favor informar todos os dados!")
         }
 
-        const emprestimo = await RepositoryEmprestimos.Create(livro, autor, datareq, datadev)
+        const emprestimo = await RepositoryEmprestimos.Create(idLivro, idAutor, requerimento, devolucao)
 
         return emprestimo
     }
 
-    async Alterar(id, livro, autor, datareq, datadev) {
-        if (!id || !livro || !autor || !datareq || !datadev) {
+    async Alterar(id, idLivro, idAutor, requerimento, devolucao) {
+        if (!id || !idLivro || !idAutor || !requerimento || !devolucao) {
             throw new Error("Favor informar o ID!")
         }
         
-        const emprestimoAlterar = await RepositoryEmprestimos.Update(id, livro, autor, datareq, datadev)
+        const emprestimoAlterar = await RepositoryEmprestimos.Update(id, idLivro, idAutor, requerimento, devolucao)
 
         return emprestimoAlterar
     }
