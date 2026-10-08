@@ -11,7 +11,7 @@ class Livros {
             nome: {
                 type: database.db.Sequelize.STRING
             },
-            autor: {
+            idAutor: {
                 type: database.db.Sequelize.STRING
             },
             ano: {

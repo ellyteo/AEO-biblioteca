@@ -29,9 +29,9 @@ class ControllerAutores {
 
     async Criar(req, res) {
         try {
-            const { nome } = req.body
+            const { nome, idLivro } = req.body
 
-            await ServiceAutores.Criar(nome)
+            await ServiceAutores.Criar(nome, idLivro)
 
             res.send({ message: "Criado com sucesso!" })
         } catch (error) {
@@ -44,9 +44,9 @@ class ControllerAutores {
     async Alterar(req, res) {
         try {
             const id = req.params.id
-            const { nome } = req.query
+            const { nome, idLivro } = req.query
 
-            await ServiceAutores.Alterar(id, nome)
+            await ServiceAutores.Alterar(id, nome, idLivro)
 
             res.send({ message: "Alterado com sucesso!" })
         } catch (error) {

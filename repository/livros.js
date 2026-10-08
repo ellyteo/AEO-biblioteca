@@ -15,13 +15,13 @@ class RepositoryLivro {
         return livroDetalhe
     }
 
-    async Create(nome, autor, ano, editora ) {
-        const livroCriar = await livro.create({ nome, autor, ano, editora })
+    async Create(nome, idAutor, ano, editora ) {
+        const livroCriar = await livro.create({ nome, idAutor, ano, editora })
 
         return livroCriar
     }
 
-    async Update(id, nome, autor, ano, editora) {
+    async Update(id, nome, idAutor, ano, editora) {
         const livroAlterar = await livro.findByPk(id)
 
         if (!livroAlterar) {
@@ -29,7 +29,7 @@ class RepositoryLivro {
         }
 
         livroAlterar.nome = nome
-        livroAlterar.autor = autor
+        livroAlterar.idAutor = idAutor
         livroAlterar.ano = ano
         livroAlterar.editora = editora
 
@@ -46,10 +46,6 @@ class RepositoryLivro {
         await livroDeletar.destroy()
 
         return livroDeletar
-    }
-
-    async FindByEmail(email) {
-        return livro.findOne({ where: { email } })
     }
 
 }

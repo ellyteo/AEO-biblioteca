@@ -1,7 +1,5 @@
 import RepositoryLivros from '../repository/livros.js'
 
-const segredo = 'S3gred0'
-
 class ServiceLivros {
 
     async Buscar() {
@@ -10,7 +8,7 @@ class ServiceLivros {
 
     async Detalhe(id) {
         if (!id) {
-            throw new Error("Favpr informar o ID!")
+            throw new Error("Favor informar o ID!")
         }
 
         const livro = await RepositoryLivros.FindById(id)
@@ -22,22 +20,22 @@ class ServiceLivros {
         return livro
     }
 
-    async Criar(nome, autor, ano, editora) {
-        if (!nome || !autor || !ano || !editora) {
+    async Criar(nome, idAutor, ano, editora) {
+        if (!nome || !idAutor || !ano || !editora) {
             throw new Error("Favor informar todos os dados!")
         }
 
-        const livro = await RepositoryLivros.Create(nome, autor, ano, editora)
+        const livro = await RepositoryLivros.Create(nome, idAutor, ano, editora)
 
         return livro
     }
 
-    async Alterar(id, nome, autor, ano, editora) {
-        if (!id || !nome || !autor || !ano || !editora) {
+    async Alterar(id, nome, idAutor, ano, editora) {
+        if (!id || !nome || !idAutor || !ano || !editora) {
             throw new Error("Favor informar o ID!")
         }
         
-        const livroAlterar = await RepositoryLivros.Update(id, nome, autor, ano, editora)
+        const livroAlterar = await RepositoryLivros.Update(id, nome, idAutor, ano, editora)
 
         return livroAlterar
     }

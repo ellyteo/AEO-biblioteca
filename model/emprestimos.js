@@ -2,22 +2,22 @@ import database from "../config/database.js"
 
 class Emprestimos {
     constructor() {
-        this.model = database.db.define("livros", {
+        this.model = database.db.define("emprestimos", {
             id: {
                 type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            livro: {
+            idLivro: {
+                type: database.db.Sequelize.INTEGER
+            },
+            idAutor: {
+                type: database.db.Sequelize.INTEGER
+            },
+            requerimento: {
                 type: database.db.Sequelize.STRING
             },
-            autor: {
-                type: database.db.Sequelize.STRING
-            },
-            datareq: {
-                type: database.db.Sequelize.STRING
-            },
-            datadev: {
+            devolucao: {
                 type: database.db.Sequelize.STRING
             }
         })

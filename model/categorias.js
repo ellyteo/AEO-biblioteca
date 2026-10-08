@@ -9,18 +9,19 @@ class Categorias {
                 autoIncrement: true
             },
             nome: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.STRING,
+                allowNull: false
             },
             genero: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.STRING,
+                allowNull: false
             },
             formato: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.STRING,
+                allowNull: false
             }
         })
 
-
-
     }
 }
-export default new Categorias ().model
+export default Categorias().model

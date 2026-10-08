@@ -45,9 +45,5 @@ class RepositoryCategorias {
         return categoriaDeletar
     }
 
-    async FindByEmail(email) {
-        return categorias.findOne({ where: { email } })
-    }
-
 }
 export default new RepositoryCategorias()
