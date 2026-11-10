@@ -74,7 +74,7 @@ class ControllerBibliotecario {
         try {
             const { email, senha } = req.body
 
-            const token = await ServiceUsuario.Login(email, senha)
+            const token = await ServiceBibliotecario.Login(email, senha)
 
             res.status(200).send({
                 token
