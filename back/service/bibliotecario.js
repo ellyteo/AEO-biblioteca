@@ -2,7 +2,7 @@ import RepositoryBibliotecario from '../repository/bibliotecario.js'
 
 const segredo = 'S3gred0'
 
-class Servicebiblio {
+class ServiceBibliotecario {
 
     async Buscar(id) {
         return RepositoryBibliotecario.Find(id)
@@ -78,4 +78,4 @@ class Servicebiblio {
 
 }
 
-export default new Servicebiblio()
+export default new ServiceBibliotecario()
