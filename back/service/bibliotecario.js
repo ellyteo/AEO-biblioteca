@@ -37,7 +37,7 @@ class ServiceBibliotecario {
             throw new Error("Email ou senha inválido")
         }
 
-        const usuario = await RepositoreUsuario.FindByEmail(email)
+        const usuario = await RepositoryBibliotecario.FindByEmail(email)
 
         if (!usuario) {
             throw new Error("Email ou senha inválido")
