@@ -1,6 +1,6 @@
 import ServiceBibliotecario from '../service/bibliotecario.js'
 
-class ControllerBiblio {
+class ControllerBibliotecario {
 
     async Buscar(_, res) {
         try {
@@ -88,4 +88,4 @@ class ControllerBiblio {
     }
 }
 
-export default new ControllerBiblio()
+export default new ControllerBibliotecario()
