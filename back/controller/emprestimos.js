@@ -5,7 +5,8 @@ class ControllerEmprestimos {
     async Buscar(_, res) {
         try {
             const emprestimos = await ServiceEmprestimos.Buscar()
-            res.send({ message: emprestimos })
+
+            res.status(200).send({ message: emprestimos })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -16,10 +17,9 @@ class ControllerEmprestimos {
     async Detalhe(req, res) {
         try {
             const id = req.params.id
-
             const emprestimo = await ServiceEmprestimos.Detalhe(id)
 
-            res.send({ message: emprestimo })
+            res.status(200).send({ message: emprestimo })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -33,7 +33,7 @@ class ControllerEmprestimos {
 
             await ServiceEmprestimos.Criar(idLivro, idAutor, requerimento, devolucao)
 
-            res.send({ message: "Criado com sucesso!" })
+            res.status(200).send({ message: "Criado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -43,12 +43,12 @@ class ControllerEmprestimos {
 
     async Alterar(req, res) {
         try {
-            const id = req.params.id
-            const { idLivro, idAutor, requerimento, devolucao } = req.query
+            const id = req.session.id
+            const { idLivro, idAutor, requerimento, devolucao } = req.body
 
             await ServiceEmprestimos.Alterar(id, idLivro, idAutor, requerimento, devolucao)
 
-            res.send({ message: "Alterado com sucesso!" })
+            res.status(200).send({ message: "Alterado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -58,11 +58,11 @@ class ControllerEmprestimos {
 
     async Deletar(req, res) {
         try {
-            const id = req.params.id
+            const id = req.session.id
 
             await ServiceEmprestimos.Deletar(id)
 
-            res.send({ message: "Deletado!" })
+            res.status(200).send({ message: "Deletado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message

@@ -19,9 +19,12 @@ class Categorias {
             formato: {
                 type: database.db.Sequelize.STRING,
                 allowNull: false
+            },
+            livros: {
+                type: database.db.Sequelize.STRING
             }
         })
 
     }
 }
-export default Categorias().model
+export default new Categorias().model

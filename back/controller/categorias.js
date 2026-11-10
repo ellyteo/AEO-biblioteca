@@ -5,7 +5,8 @@ class ControllerCategorias {
     async Buscar(_, res) {
         try {
             const categorias = await ServiceCategorias.Buscar()
-            res.send({ message: categorias })
+
+            res.status(200).send({ message: categorias })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -19,7 +20,7 @@ class ControllerCategorias {
 
             const categoria = await ServiceCategorias.Detalhe(id)
 
-            res.send({ message: categoria })
+            res.status(200).send({ message: categoria })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -29,11 +30,11 @@ class ControllerCategorias {
 
     async Criar(req, res) {
         try {
-            const { nome } = req.body
+            const { nome, genero, formato, livros } = req.body
 
-            await ServiceCategorias.Criar(nome)
+            await ServiceCategorias.Criar(nome, genero, formato, livros)
 
-            res.send({ message: "Criado com sucesso!" })
+            res.status(200).send({ message: "Criado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -43,12 +44,12 @@ class ControllerCategorias {
 
     async Alterar(req, res) {
         try {
-            const id = req.params.id
-            const { nome } = req.query
+            const id = req.session.id
+            const { nome, genero, formato, livros } = req.body
 
-            await ServiceCategorias.Alterar(id, nome)
+            await ServiceCategorias.Alterar(id, nome, genero, formato, livros)
 
-            res.send({ message: "Alterado com sucesso!" })
+            res.status(200).send({ message: "Alterado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message
@@ -58,11 +59,11 @@ class ControllerCategorias {
 
     async Deletar(req, res) {
         try {
-            const id = req.params.id
+            const id = req.session.id
 
             await ServiceCategorias.Deletar(id)
 
-            res.send({ message: "Deletado!" })
+            res.status(200).send({ message: "Deletado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 message: error.message

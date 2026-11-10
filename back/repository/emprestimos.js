@@ -1,31 +1,30 @@
-import emprestimo from '../model/emprestimos.js'
+import Emprestimo from '../model/emprestimos.js'
 
-class Repositoryemprestimos {
-
+class RepositoryEmprestimos {
 
     async Find() {
-        const emprestimos = await emprestimo.findAll()
+        const emprestimos = await Emprestimo.findAll()
 
         return emprestimos
     }
 
     async FindById(id) {
-        const EmprestimoDetalhe = await emprestimo.findByPk(id)
+        const emprestimoDetalhe = await Emprestimo.findByPk(id)
 
-        return EmprestimoDetalhe
+        return emprestimoDetalhe
     }
 
     async Create(idLivro, idAutor, requerimento, devolucao) {
-        const  emprestimoCriar = await emprestimo.create({ idLivro, idAutor, requerimento, devolucao })
+        const  emprestimoCriar = await Emprestimo.create({ idLivro, idAutor, requerimento, devolucao })
 
         return  emprestimoCriar
     }
 
     async Update(id, idLivro, idAutor, requerimento, devolucao) {
-        const emprestimoAlterar = await emprestimo.findByPk(id)
+        const emprestimoAlterar = await Emprestimo.findByPk(id)
 
         if (!emprestimoAlterar) {
-            throw new Error("Usuário não encontrado!")
+            throw new Error("Empréstimo não encontrado!")
         }
 
         emprestimoAlterar.idLivro = idLivro
@@ -37,16 +36,14 @@ class Repositoryemprestimos {
     }
 
     async Delete(id) {
-        const emprestimoDeletar = await emprestimo.findByPk(id)
+        const emprestimoDeletar = await Emprestimo.findByPk(id)
 
         if (!emprestimoDeletar) {
-            throw new Error("Usuário não encontrado!")
+            throw new Error("Empréstimo não encontrado!")
         }
 
         await emprestimoDeletar.destroy()
-
-        return emprestimoDeletar
     }
 
 }
-export default new Repositoryemprestimos()
+export default new RepositoryEmprestimos()

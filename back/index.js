@@ -5,10 +5,12 @@ import autores from './router/autores.js';
 import categorias from './router/categorias.js';
 import emprestimos from './router/emprestimos.js';
 import livros from './router/livros.js';
+import cors from 'cors'
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.use('/api/v1/bibliotecario', bibliotecario)
 app.use('/api/v1/autores', autores)

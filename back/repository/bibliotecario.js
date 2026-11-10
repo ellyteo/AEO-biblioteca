@@ -1,57 +1,53 @@
-import biliotecario from "../model/bibliotecario.js"
+import Biliotecario from "../model/bibliotecario.js"
 
-class RepositoryBiblio {
+class RepositoryBibliotecario {
 
     async Find() {
-        const biblioS = await biliotecario.findAll()
+        const bibliotecarios = await Biliotecario.findAll()
 
-        return biblioS
+        return bibliotecarios
     }
 
     async FindById(id) {
-        const biblioDetalhes = await biliotecario.findByPk(id)
+        const bibliotecarioDetalhes = await Biliotecario.findByPk(id)
 
-        return biblioDetalhes
+        return bibliotecarioDetalhes
     }
 
-    async FindByNome(nome) {
-        return biblio.findOne({ where: { nome } })
+    async Create(nome, senha, email) {
+        const bibliotecarioCreate = await Biliotecario.create({ nome, senha, email })
+
+        return bibliotecarioCreate
     }
 
-    async Create(nome) {
-        const biblioCreate = await biliotecario.create({ nome })
+    async Update(id, nome, senha, email) {
+        const bibliotecarioAlterar = await Biliotecario.findByPk(id)
 
-        return biblioCreate
-    }
-
-    async Update(id, nome) {
-        const biblioAlterar = await biliotecario.findByPk(id)
-
-        if (!biblioAlterar) {
+        if (!bibliotecarioAlterar) {
             throw new Error("Bibliotecario não encontrado")
         }
 
-        biblioAlterar.nome = nome || biblioAlterar.nome
+        bibliotecarioAlterar.nome = nome || bibliotecarioAlterar.nome
+        bibliotecarioAlterar.senha = senha || bibliotecarioAlterar.senha
+        bibliotecarioAlterar.email = email || bibliotecarioAlterar.email
 
-        await biblioAlterar.save()
+        await bibliotecarioAlterar.save()
     }
 
     async Delete(id) {
-        const biblioDeletar = await biliotecario.findByPk(id)
+        const bibliotecarioDeletar = await Biliotecario.findByPk(id)
 
-        if (!biblioDeletar) {
+        if (!bibliotecarioDeletar) {
             throw new Error("Bibliotecario não encontrado")
         }
 
-        await biblioDeletar.destroy()
-
-        return biblioDeletar
+        await bibliotecarioDeletar.destroy()
     }
 
     async FindByEmail(email) {
-        return livro.findOne({ where: { email } })
+        return Biliotecario.findOne({ where: { email } })
     }
 
 }
 
-export default new RepositoryBiblio()
+export default new RepositoryBibliotecario()

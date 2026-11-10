@@ -20,22 +20,22 @@ class ServiceCategorias {
         return categoria
     }
 
-    async Criar(nome) {
-        if (!nome) {
+    async Criar(nome, genero, formato, livros) {
+        if (!nome || !genero || !formato || !livros) {
             throw new Error("Favor informar todos os dados!")
         }
 
-        const categoria = await RepositoryCategorias.Create(nome)
+        const categoria = await RepositoryCategorias.Create(nome, genero, formato, livros)
 
         return categoria
     }
 
-    async Alterar(id, nome) {
-        if (!id || !nome) {
+    async Alterar(id, nome, genero, formato, livros) {
+        if (!id || !nome || !genero || !formato || !livros) {
             throw new Error("Favor informar o ID!")
         }
         
-        const categoriaAlterar = await RepositoryCategorias.Update(id, nome)
+        const categoriaAlterar = await RepositoryCategorias.Update(id, nome, genero, formato, livros)
 
         return categoriaAlterar
     }

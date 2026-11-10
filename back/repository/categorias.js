@@ -1,48 +1,49 @@
-import categorias from '../model/categorias.js'
+import Categorias from '../model/categorias.js'
 
 class RepositoryCategorias {
 
 
     async Find() {
-        const categoria = await categorias.findAll()
+        const categoria = await Categorias.findAll()
 
         return categoria
     }
 
     async FindById(id) {
-        const categoriaDetalhe = await categorias.findByPk(id)
+        const categoriaDetalhe = await Categorias.findByPk(id)
 
         return categoriaDetalhe
     }
 
-    async Create(nome) {
-        const categoriaCriar = await categorias.create({ nome })
+    async Create(nome, genero, formato, livros) {
+        const categoriaCriar = await Categorias.create({ nome, genero, formato, livros })
 
         return categoriaCriar
     }
 
-    async Update(id, nome) {
-        const categoriaAlterar = await categorias.findByPk(id)
+    async Update(id, nome, genero, formato, livros) {
+        const categoriaAlterar = await Categorias.findByPk(id)
 
         if (!categoriaAlterar) {
-            throw new Error("Usuário não encontrado!")
+            throw new Error("Categoria não encontrada!")
         }
 
         categoriaAlterar.nome = nome
+        categoriaAlterar.genero = genero
+        categoriaAlterar.formato = formato
+        categoriaAlterar.livros = livros
 
         await categoriaAlterar.save()
     }
 
     async Delete(id) {
-        const categoriaDeletar = await categorias.findByPk(id)
+        const categoriaDeletar = await Categorias.findByPk(id)
 
         if (!categoriaDeletar) {
-            throw new Error("Usuário não encontrado!")
+            throw new Error("Categoria não encontrada!")
         }
 
         await categoriaDeletar.destroy()
-
-        return categoriaDeletar
     }
 
 }

@@ -1,11 +1,11 @@
-import RepositoryBiblio from '../repository/bibliotecario.js'
+import RepositoryBibliotecario from '../repository/bibliotecario.js'
 
 const segredo = 'S3gred0'
 
 class Servicebiblio {
 
     async Buscar(id) {
-        return RepositoryBiblio.Find(id)
+        return RepositoryBibliotecario.Find(id)
     }
 
     async Detalhe(id) {
@@ -13,7 +13,7 @@ class Servicebiblio {
             throw new Error("Favor informar o ID")
         }
 
-        const biliotecario = await RepositoryBiblio.FindById(id)
+        const biliotecario = await RepositoryBibliotecario.FindById(id)
 
         if (!biliotecario) {
             throw new Error(`ID ${id} do bibliotecario não encontrado`)
@@ -27,7 +27,7 @@ class Servicebiblio {
             throw new Error("Favor informar todos os dados")
         }
 
-        const bibliotecario = await RepositoryBiblio.Create(nome)
+        const bibliotecario = await RepositoryBibliotecario.Create(nome)
 
         return bibliotecario
     }
@@ -61,7 +61,7 @@ class Servicebiblio {
             throw new Error("Favor informar os dados");
         }
 
-        const biblioAlterado = await RepositoryBiblio.Update(id, nome)
+        const biblioAlterado = await RepositoryBibliotecario.Update(id, nome)
 
         return biblioAlterado
     }
@@ -71,7 +71,7 @@ class Servicebiblio {
             throw new Error("Favor informar o ID")
         }
 
-        const biblio = await RepositoryBiblio.Delete(id)
+        const biblio = await RepositoryBibliotecario.Delete(id)
 
         return biblio
     }

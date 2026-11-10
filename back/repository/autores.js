@@ -15,13 +15,13 @@ class RepositoryAutores {
         return autorDetalhe
     }
 
-    async Create(nome, idLivro) {
-        const autorCriar = await autor.create({ nome, idLivro })
+    async Create(nome, biografia, genero, livros) {
+        const autorCriar = await autor.create({ nome, biografia, genero, livros })
 
         return autorCriar
     }
 
-    async Update(id, nome, idLivro) {
+    async Update(id, nome, biografia, genero, livros) {
         const autorAlterar = await autor.findByPk(id)
 
         if (!autorAlterar) {
@@ -29,7 +29,9 @@ class RepositoryAutores {
         }
 
         autorAlterar.nome = nome
-        autorAlterar.idLivro = idLivro
+        autorAlterar.biografia = biografia
+        autorAlterar.genero = genero
+        autorAlterar.livros = livros
 
         await autorAlterar.save()
     }
@@ -42,9 +44,7 @@ class RepositoryAutores {
         }
 
         await autorDeletar.destroy()
-
-        return autorDeletar
     }
-    
+
 }
 export default new RepositoryAutores()

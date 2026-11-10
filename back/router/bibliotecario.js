@@ -1,13 +1,14 @@
-import express from "express"
-import ControllerBiblio from "../controller/bibliotecario.js"
+import express from 'express'
+import ControllerBibliotecario from '../controller/bibliotecario.js'
 import authMiddleware from '../middleware/auth.js'
+
 const router = express.Router()
 
-router.get("/listar", authMiddleware, ControllerBiblio.Buscar)
-router.get("/detalhe/:id", ControllerBiblio.Detalhe)
-router.post("/criar", ControllerBiblio.Criar)
-router.put("/alterar/:id", ControllerBiblio.Alterar)
-router.delete("/deletar/:id", ControllerBiblio.Deletar)
-router.post("/login", ControllerBiblio.Login)
+router.get("/listar", ControllerBibliotecario.Buscar)
+router.get("/detalhe/:id", ControllerBibliotecario.Detalhe)
+router.post("/criar", ControllerBibliotecario.Criar)
+router.put("/alterar/:id", authMiddleware, ControllerBibliotecario.Alterar)
+router.delete("/deletar/:id", authMiddleware, ControllerBibliotecario.Deletar)
+router.post("/login", ControllerBibliotecario.Login)
 
 export default router

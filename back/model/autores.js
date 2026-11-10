@@ -20,8 +20,8 @@ class Autores {
                 type: database.db.Sequelize.STRING,
                 allowNull: false
             },
-            idLivro: {
-                type: database.db.Sequelize.INTEGER
+            livros: {
+                type: database.db.Sequelize.STRING
             }
         })
     }

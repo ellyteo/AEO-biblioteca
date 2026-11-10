@@ -1,10 +1,11 @@
-import Servicebiblio from '../service/bibliotecario.js'
+import ServiceBibliotecario from '../service/bibliotecario.js'
 
 class ControllerBiblio {
 
     async Buscar(_, res) {
         try {
-            const bibliotecario = await Servicebiblio.Buscar()
+            const bibliotecario = await ServiceBibliotecario.Buscar()
+
             res.status(200).send({ mensagem: bibliotecario })
         } catch (error) {
             res.status(500).send({
@@ -15,11 +16,10 @@ class ControllerBiblio {
 
     async Detalhe(req, res) {
         try {
-            const id = req.params.id
+            const id = req.session.id
+            const bibliotecario = await ServiceBibliotecario.Detalhe(id)
 
-            const biblio = await Servicebiblio.Detalhe(id)
-
-            res.status(200).send({ mensagem: biblio })
+            res.status(200).send({ mensagem: bibliotecario })
         } catch (error) {
             res.status(500).send({
                 mensagem: error.message
@@ -29,11 +29,40 @@ class ControllerBiblio {
 
     async Criar(req, res) {
         try {
-            const { nome } = req.body
+            const { nome, senha, email } = req.body
 
-            await Servicebiblio.Criar(nome)
+            await ServiceBibliotecario.Criar(nome, senha, email)
 
             res.status(201).send({ mensagem: "Cadastrado com sucesso" })
+        } catch (error) {
+            res.status(500).send({
+                mensagem: error.message
+            })
+        }
+    }
+
+    async Alterar(req, res) {
+        try {
+            const id = req.session.id
+            const { nome, senha, email } = req.body
+
+            await ServiceBibliotecario.Alterar(id, nome, senha, email)
+
+            res.status(201).send({ mensagem: "Cadastrado com sucesso" })
+        } catch (error) {
+            res.status(500).send({
+                mensagem: error.message
+            })
+        }
+    }
+
+    async Deletar(req, res) {
+        try {
+            const id = req.session.id
+
+            await ServiceBibliotecario.Deletar(id)
+
+            res.status(204).send({ mensagem: "Deletado com sucesso!" })
         } catch (error) {
             res.status(500).send({
                 mensagem: error.message
@@ -56,35 +85,6 @@ class ControllerBiblio {
             })
         }
 
-    }
-
-    async Alterar(req, res) {
-        try {
-            const id = req.params.id
-            const { nome } = req.body
-
-            await Servicebiblio.Alterar(id, nome)
-
-            res.status(201).send({ mensagem: "Cadastrado com sucesso" })
-        } catch (error) {
-            res.status(500).send({
-                mensagem: error.message
-            })
-        }
-    }
-
-    async Deletar(req, res) {
-        try {
-            const identificador = req.params.id
-
-            await Servicebiblio.Deletar(identificador)
-
-            res.status(204).send({ mensagem: "Deletado" })
-        } catch (error) {
-            res.status(500).send({
-                mensagem: error.message
-            })
-        }
     }
 }
 

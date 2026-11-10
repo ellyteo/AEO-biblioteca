@@ -11,6 +11,14 @@ class Bibliotecario {
             nome: {
                 type: database.db.Sequelize.STRING,
                 allowNull: false
+            },
+            senha: {
+                type: database.db.Sequelize.STRING,
+                allowNull: false
+            },
+            email: {
+                type: database.db.Sequelize.STRING,
+                allowNull: false
             }
         })
     }
