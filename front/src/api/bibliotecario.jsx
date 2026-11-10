@@ -1,7 +1,7 @@
 import api from './api'
 
-export const alterar = async (id, email, password) => {
-    const body = { email, password }
+export const alterar = async (id, email, senha) => {
+    const body = { email, senha }
     const response = await api.put(`/v1/bibliotecario/alterar/${id}`, body,
         {
             headers: { 'Content-Type': 'application/json' }
@@ -10,8 +10,8 @@ export const alterar = async (id, email, password) => {
     return response.data
 }
 
-export const login = async (email, password) => {
-    const body = { email, password }
+export const login = async (email, senha) => {
+    const body = { email, senha }
     const response = await api.post('/v1/bibliotecario/login', body, {
         headers: { 'Content-Type': 'application/json' }
     })
@@ -19,8 +19,8 @@ export const login = async (email, password) => {
     return response.data
 }
 
-export const criar = async (nome, email, password) => {
-    const body = { nome, email, password }
+export const criar = async (nome, email, senha) => {
+    const body = { nome, email, senha }
     const response = await api.post('/v1/bibliotecario/criar', body, {
         headers: { 'Content-Type': 'application/json' }
     })
