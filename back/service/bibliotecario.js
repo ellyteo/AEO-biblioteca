@@ -1,4 +1,6 @@
 import RepositoryBibliotecario from '../repository/bibliotecario.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const segredo = 'S3gred0'
 const SALT = 12
