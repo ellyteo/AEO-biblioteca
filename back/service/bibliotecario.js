@@ -1,11 +1,12 @@
 import RepositoryBibliotecario from '../repository/bibliotecario.js'
 
 const segredo = 'S3gred0'
+const SALT = 12
 
 class ServiceBibliotecario {
 
-    async Buscar(id) {
-        return RepositoryBibliotecario.Find(id)
+    async Buscar() {
+        return RepositoryBibliotecario.Find()
     }
 
     async Detalhe(id) {
@@ -27,9 +28,9 @@ class ServiceBibliotecario {
             throw new Error("Favor informar todos os dados")
         }
 
-        const bibliotecario = await RepositoryBibliotecario.Create(nome, email, senha)
+        const cryptPass = await bcrypt.hash(senha, SALT)
 
-        return bibliotecario
+        await RepositoryBibliotecario.Criar(nome, email, cryptPass)
     }
 
     async Login(email, senha) {
@@ -37,33 +38,40 @@ class ServiceBibliotecario {
             throw new Error("Email ou senha inválido")
         }
 
-        const usuario = await RepositoryBibliotecario.FindByEmail(email)
+        const bibliotecario = await RepositoryBibliotecario.FindByEmail(email)
 
-        if (!usuario) {
+        if (!bibliotecario) {
             throw new Error("Email ou senha inválido")
         }
 
         if (
-            !(await bcrypt.compare(String(senha), usuario.senha))
+            !(await bcrypt.compare(String(senha), bibliotecario.senha))
         ) {
             throw new Error("Email ou senha inválido")
         }
 
         return jwt.sign(
-            { id: usuario.id, email },
+            {
+                id: bibliotecario.id,
+                email: bibliotecario.email
+            },
             segredo,
-            { expiresIn: 60 * 60 }
+            {
+                expiresIn: 60
+            }
         )
     }
 
     async Alterar(id, nome, email, senha) {
-        if (!id) {
-            throw new Error("Favor informar os dados");
+        if(!id || !nome || !email || !senha) {
+            throw new Error("Favor informar todos os parametros")
         }
+        
+        const cryptPass = !senha
+            ? undefined
+            : await bcrypt.hash(senha, SALT)
 
-        const biblioAlterado = await RepositoryBibliotecario.Update(id, nome, email, senha)
-
-        return biblioAlterado
+        await RepositoryUser.Alterar(id, nome, email, cryptPass)
     }
 
     async Deletar(id) {
@@ -71,10 +79,9 @@ class ServiceBibliotecario {
             throw new Error("Favor informar o ID")
         }
 
-        const biblio = await RepositoryBibliotecario.Delete(id)
+        const bibliotecario= await RepositoryBibliotecario.Delete(id)
 
-        return biblio
-    }
+        return bibliotecario    }
 
 }
 
