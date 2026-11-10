@@ -22,12 +22,12 @@ class Servicebiblio {
         return biliotecario
     }
 
-    async Criar(nome) {
-        if (!nome) {
+    async Criar(nome, email, senha) {
+        if (!nome || !email || !senha) {
             throw new Error("Favor informar todos os dados")
         }
 
-        const bibliotecario = await RepositoryBibliotecario.Create(nome)
+        const bibliotecario = await RepositoryBibliotecario.Create(nome, email, senha)
 
         return bibliotecario
     }
@@ -56,12 +56,12 @@ class Servicebiblio {
         )
     }
 
-    async Alterar(id, nome) {
+    async Alterar(id, nome, email, senha) {
         if (!id) {
             throw new Error("Favor informar os dados");
         }
 
-        const biblioAlterado = await RepositoryBibliotecario.Update(id, nome)
+        const biblioAlterado = await RepositoryBibliotecario.Update(id, nome, email, senha)
 
         return biblioAlterado
     }

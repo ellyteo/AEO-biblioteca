@@ -1,7 +1,7 @@
 import api from './api'
 
-export const listar = async () => {
-    const response = await api.get('/v1/autores/listar', {
+export const buscar = async () => {
+    const response = await api.get('/v1/autores/buscar', {
         headers: { 'Content-Type': 'application/json' }
     })
     return response.data
@@ -14,16 +14,16 @@ export const detalhe = async (id) => {
     return response.data
 }
 
-export const criar = async (nome, idLivro) => {
-    const body = { nome, idLivro }
+export const criar = async (nome, biografia, genero, livros) => {
+    const body = { nome, biografia, genero, livros }
     const response = await api.post('/v1/autores/criar', body, {
         headers: { 'Content-Type': 'application/json' }
     })
     return response.data
 }
 
-export const alterar = async (id, nome, idLivro) => {
-    const body = { nome, idLivro }
+export const alterar = async (id ,  nome, biografia, genero, livros) => {
+    const body = { nome, biografia, genero, livros }
     const response = await api.put(`/v1/autores/alterar/${id}`, body, {
         headers: { 'Content-Type': 'application/json' }
     })
