@@ -1,27 +1,27 @@
-import Biliotecario from "../model/bibliotecario.js"
+import Bibliotecario from "../model/bibliotecario.js"
 
 class RepositoryBibliotecario {
 
     async Find() {
-        const bibliotecarios = await Biliotecario.findAll()
+        const bibliotecarios = await Bibliotecario.findAll()
 
         return bibliotecarios
     }
 
     async FindById(id) {
-        const bibliotecarioDetalhes = await Biliotecario.findByPk(id)
+        const bibliotecarioDetalhes = await Bibliotecario.findByPk(id)
 
         return bibliotecarioDetalhes
     }
 
     async Create(nome, email, senha) {
-        const bibliotecarioCreate = await Biliotecario.create({ nome, email, senha })
+        const bibliotecarioCreate = await Bibliotecario.create({ nome, email, senha })
 
         return bibliotecarioCreate
     }
 
     async Update(id, nome, email, senha) {
-        const bibliotecarioAlterar = await Biliotecario.findByPk(id)
+        const bibliotecarioAlterar = await Bibliotecario.findByPk(id)
 
         if (!bibliotecarioAlterar) {
             throw new Error("Bibliotecario não encontrado")
@@ -35,7 +35,7 @@ class RepositoryBibliotecario {
     }
 
     async Delete(id) {
-        const bibliotecarioDeletar = await Biliotecario.findByPk(id)
+        const bibliotecarioDeletar = await Bibliotecario.findByPk(id)
 
         if (!bibliotecarioDeletar) {
             throw new Error("Bibliotecario não encontrado")
@@ -45,7 +45,7 @@ class RepositoryBibliotecario {
     }
 
     async FindByEmail(email) {
-        return Biliotecario.findOne({ where: { email } })
+        return Bibliotecario.findOne({ where: { email } })
     }
 
 }
