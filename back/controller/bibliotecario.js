@@ -2,9 +2,10 @@ import ServiceBibliotecario from '../service/bibliotecario.js'
 
 class ControllerBibliotecario {
 
-    async Buscar(_, res) {
+    async Buscar(req, res) {
         try {
-            const bibliotecario = await ServiceBibliotecario.Buscar()
+            const id = req.session.id
+            const bibliotecario = await ServiceBibliotecario.Buscar(id)
 
             res.status(200).send({ message: bibliotecario })
         } catch (error) {
