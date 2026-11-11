@@ -47,7 +47,8 @@ class ServiceBibliotecario {
         }
 
         if (
-            !(await bcrypt.compare(String(senha), bibliotecario.senha))
+            !bibliotecario
+            || !(await bcrypt.compare(String(senha), bibliotecario.senha))
         ) {
             throw new Error("Email ou senha inválido")
         }
@@ -65,10 +66,10 @@ class ServiceBibliotecario {
     }
 
     async Alterar(id, nome, email, senha) {
-        if(!id || !nome || !email || !senha) {
+        if (!id || !nome || !email || !senha) {
             throw new Error("Favor informar todos os parametros")
         }
-        
+
         const cryptPass = !senha
             ? undefined
             : await bcrypt.hash(senha, SALT)
@@ -81,9 +82,10 @@ class ServiceBibliotecario {
             throw new Error("Favor informar o ID")
         }
 
-        const bibliotecario= await RepositoryBibliotecario.Delete(id)
+        const bibliotecario = await RepositoryBibliotecario.Delete(id)
 
-        return bibliotecario    }
+        return bibliotecario
+    }
 
 }
 
