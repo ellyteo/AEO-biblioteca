@@ -29,9 +29,9 @@ class ControllerBibliotecario {
 
     async Criar(req, res) {
         try {
-            const { nome, senha, email } = req.body
+            const { nome, email, senha } = req.body
 
-            await ServiceBibliotecario.Criar(nome, senha, email)
+            await ServiceBibliotecario.Criar(nome, email, senha)
 
             res.status(201).send({ message: "Cadastrado com sucesso" })
         } catch (error) {
@@ -44,9 +44,9 @@ class ControllerBibliotecario {
     async Alterar(req, res) {
         try {
             const id = req.session.id
-            const { nome, senha, email } = req.body
+            const { nome, email, senha } = req.body
 
-            await ServiceBibliotecario.Alterar(id, nome, senha, email)
+            await ServiceBibliotecario.Alterar(id, nome, email, senha)
 
             res.status(201).send({ message: "Cadastrado com sucesso" })
         } catch (error) {

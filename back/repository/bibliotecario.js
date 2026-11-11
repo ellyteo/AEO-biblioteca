@@ -14,13 +14,13 @@ class RepositoryBibliotecario {
         return bibliotecarioDetalhes
     }
 
-    async Create(nome, senha, email) {
-        const bibliotecarioCreate = await Biliotecario.create({ nome, senha, email })
+    async Create(nome, email, senha) {
+        const bibliotecarioCreate = await Biliotecario.create({ nome, email, senha })
 
         return bibliotecarioCreate
     }
 
-    async Update(id, nome, senha, email) {
+    async Update(id, nome, email, senha) {
         const bibliotecarioAlterar = await Biliotecario.findByPk(id)
 
         if (!bibliotecarioAlterar) {
@@ -28,8 +28,8 @@ class RepositoryBibliotecario {
         }
 
         bibliotecarioAlterar.nome = nome || bibliotecarioAlterar.nome
-        bibliotecarioAlterar.senha = senha || bibliotecarioAlterar.senha
         bibliotecarioAlterar.email = email || bibliotecarioAlterar.email
+        bibliotecarioAlterar.senha = senha || bibliotecarioAlterar.senha
 
         await bibliotecarioAlterar.save()
     }

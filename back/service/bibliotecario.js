@@ -74,7 +74,7 @@ class ServiceBibliotecario {
             ? undefined
             : await bcrypt.hash(senha, SALT)
 
-        await RepositoryUser.Alterar(id, nome, email, cryptPass)
+        await RepositoryBibliotecario.Alterar(id, nome, email, cryptPass)
     }
 
     async Deletar(id) {
