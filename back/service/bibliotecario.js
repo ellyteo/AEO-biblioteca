@@ -32,7 +32,7 @@ class ServiceBibliotecario {
 
         const cryptPass = await bcrypt.hash(senha, SALT)
 
-        await RepositoryBibliotecario.Criar(nome, email, cryptPass)
+        await RepositoryBibliotecario.Create(nome, email, cryptPass)
     }
 
     async Login(email, senha) {
