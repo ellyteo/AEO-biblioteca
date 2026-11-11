@@ -23,7 +23,7 @@ class RepositoryBibliotecario {
     async Update(id, nome, email, senha) {
         const bibliotecarioAlterar = await Bibliotecario.findByPk(id)
 
-        if (!bibliotecarioAlterar) {
+        if ( !bibliotecarioAlterar) {
             throw new Error("Bibliotecario não encontrado")
         }
 
