@@ -16,6 +16,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/bibliotecario" element={<Home />} />
         </Route>
+        
       </Routes>
       <Footer />
     </>
