@@ -14,10 +14,12 @@ function Header() {
         <>
             Header
             <button
-            onClick={handleLogout}
+                onClick={handleLogout}
             >Sair</button>
 
-
+            <button
+                onClick={() => navigate('/bibliotecario')}
+            >Painel</button>
         </>
     )
 }
