@@ -7,20 +7,19 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('token')
-        return navigate('/')
-
+        navigate('/')
     }
-    return (
-        <>
-            Header
-            <button
-                onClick={handleLogout}
-            >Sair</button>
 
-            <button
-                onClick={() => navigate('/bibliotecario')}
-            >Painel</button>
-        </>
+    return (
+        <header className="site-header">
+            <button className="site-brand" type="button" onClick={() => navigate('/bibliotecario')}>
+                Biblioteca AEO
+            </button>
+            <nav aria-label="Navegação principal">
+                <button type="button" onClick={() => navigate('/bibliotecario')}>Painel</button>
+                <button className="site-logout" type="button" onClick={handleLogout}>Sair</button>
+            </nav>
+        </header>
     )
 }
 

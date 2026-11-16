@@ -1,6 +1,16 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../../api/api'
 import './style.css'
+
+const formularioInicial = {
+    nome: '',
+    idAutor: '',
+    idCategoria: '',
+    ano: '',
+    editora: '',
+}
+
+const chaveCategoriaLivro = (idLivro) => `biblioteca:livro:${idLivro}:categoria`
 
 function getRecords(response, label) {
     if (Array.isArray(response.data?.message)) {
@@ -10,71 +20,96 @@ function getRecords(response, label) {
     throw new Error(`Não foi possível carregar a lista de ${label}.`)
 }
 
+function getErrorMessage(error, fallback) {
+    return error.response?.data?.message || error.message || fallback
+}
+
 function Livros() {
     const [livros, setLivros] = useState([])
     const [autores, setAutores] = useState([])
-    const [nome, setNome] = useState('')
-    const [idAutor, setIdAutor] = useState('')
-    const [ano, setAno] = useState('')
-    const [editora, setEditora] = useState('')
+    const [categorias, setCategorias] = useState([])
+    const [formulario, setFormulario] = useState(formularioInicial)
     const [erro, setErro] = useState('')
     const [sucesso, setSucesso] = useState('')
     const [carregando, setCarregando] = useState(true)
     const [salvando, setSalvando] = useState(false)
+    const [versaoLista, setVersaoLista] = useState(0)
 
-    const carregarDados = useCallback(async () => {
-        setCarregando(true)
-        setErro('')
-
-        try {
-            const [respostaLivros, respostaAutores] = await Promise.all([
-                api.get('/v1/livros/listar'),
-                api.get('/v1/autores/listar'),
-            ])
-
-            setLivros(getRecords(respostaLivros, 'livros'))
-            setAutores(getRecords(respostaAutores, 'autores'))
-        } catch (error) {
-            setErro(
-                error.response?.data?.message ||
-                error.message ||
-                'Não foi possível carregar os dados.',
-            )
-        } finally {
-            setCarregando(false)
-        }
-    }, [])
+    const atualizarCampo = (event) => {
+        const { name, value } = event.target
+        setFormulario((atual) => ({ ...atual, [name]: value }))
+    }
 
     useEffect(() => {
+        const carregarDados = async () => {
+            setCarregando(true)
+            setErro('')
+
+            try {
+                const [respostaLivros, respostaAutores, respostaCategorias] = await Promise.all([
+                    api.get('/v1/livros/listar'),
+                    api.get('/v1/autores/listar'),
+                    api.get('/v1/categorias/listar'),
+                ])
+
+                setLivros(getRecords(respostaLivros, 'livros'))
+                setAutores(getRecords(respostaAutores, 'autores'))
+                setCategorias(getRecords(respostaCategorias, 'categorias'))
+            } catch (error) {
+                setErro(getErrorMessage(error, 'Não foi possível carregar os dados.'))
+            } finally {
+                setCarregando(false)
+            }
+        }
+
         carregarDados()
-    }, [carregarDados])
+    }, [versaoLista])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         setErro('')
         setSucesso('')
         setSalvando(true)
+        let livroCadastrado = false
 
         try {
-            await api.post('/v1/livros/criar', {
-                nome,
-                idAutor,
-                ano: Number(ano),
-                editora,
-            })
+            const livrosAnteriores = getRecords(await api.get('/v1/livros/listar'), 'livros')
+            const idsAnteriores = new Set(livrosAnteriores.map((livro) => String(livro.id)))
 
-            await carregarDados()
-            setNome('')
-            setIdAutor('')
-            setAno('')
-            setEditora('')
+            await api.post('/v1/livros/criar', {
+                ...formulario,
+                ano: Number(formulario.ano),
+            })
+            livroCadastrado = true
+
+            const livrosAtualizados = getRecords(await api.get('/v1/livros/listar'), 'livros')
+            const livroCriado = livrosAtualizados
+                .filter((livro) => (
+                    !idsAnteriores.has(String(livro.id))
+                    && livro.nome === formulario.nome
+                    && String(livro.idAutor) === String(formulario.idAutor)
+                    && Number(livro.ano) === Number(formulario.ano)
+                    && livro.editora === formulario.editora
+                ))
+                .sort((a, b) => Number(b.id) - Number(a.id))[0]
+
+            if (!livroCriado) {
+                throw new Error('O livro foi cadastrado, mas não foi possível associá-lo à categoria.')
+            }
+
+            localStorage.setItem(chaveCategoriaLivro(livroCriado.id), String(formulario.idCategoria))
+
+            setFormulario(formularioInicial)
             setSucesso('Livro cadastrado com sucesso.')
+            setVersaoLista((atual) => atual + 1)
         } catch (error) {
-            setErro(
-                error.response?.data?.message ||
-                error.message ||
-                'Não foi possível cadastrar o livro.',
-            )
+            if (livroCadastrado) {
+                setFormulario(formularioInicial)
+                setVersaoLista((atual) => atual + 1)
+                setErro(`Livro cadastrado, mas a categoria não foi salva neste navegador. ${getErrorMessage(error, '')}`)
+            } else {
+                setErro(getErrorMessage(error, 'Não foi possível cadastrar o livro.'))
+            }
         } finally {
             setSalvando(false)
         }
@@ -99,10 +134,11 @@ function Livros() {
                         <label htmlFor="livro-nome">Título do livro:</label>
                         <input
                             id="livro-nome"
+                            name="nome"
                             type="text"
                             required
-                            value={nome}
-                            onChange={(event) => setNome(event.target.value)}
+                            value={formulario.nome}
+                            onChange={atualizarCampo}
                         />
                     </div>
 
@@ -110,9 +146,10 @@ function Livros() {
                         <label htmlFor="livro-autor">Autor:</label>
                         <select
                             id="livro-autor"
+                            name="idAutor"
                             required
-                            value={idAutor}
-                            onChange={(event) => setIdAutor(event.target.value)}
+                            value={formulario.idAutor}
+                            onChange={atualizarCampo}
                             disabled={carregando || autores.length === 0}
                         >
                             <option value="" disabled>
@@ -128,14 +165,37 @@ function Livros() {
                     </div>
 
                     <div className="livros-input-group">
+                        <label htmlFor="livro-categoria">Categoria:</label>
+                        <select
+                            id="livro-categoria"
+                            name="idCategoria"
+                            required
+                            value={formulario.idCategoria}
+                            onChange={atualizarCampo}
+                            disabled={carregando || categorias.length === 0}
+                        >
+                            <option value="" disabled>
+                                {carregando ? 'Carregando categorias...' : 'Selecione uma categoria'}
+                            </option>
+                            {categorias.map((categoria) => (
+                                <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
+                            ))}
+                        </select>
+                        {!carregando && categorias.length === 0 && (
+                            <small className="livros-hint">Selecione uma categoria para cadastrar um livro.</small>
+                        )}
+                    </div>
+
+                    <div className="livros-input-group">
                         <label htmlFor="livro-ano">Ano de publicação:</label>
                         <input
                             id="livro-ano"
+                            name="ano"
                             type="number"
                             min="1"
                             required
-                            value={ano}
-                            onChange={(event) => setAno(event.target.value)}
+                            value={formulario.ano}
+                            onChange={atualizarCampo}
                         />
                     </div>
 
@@ -143,10 +203,11 @@ function Livros() {
                         <label htmlFor="livro-editora">Editora:</label>
                         <input
                             id="livro-editora"
+                            name="editora"
                             type="text"
                             required
-                            value={editora}
-                            onChange={(event) => setEditora(event.target.value)}
+                            value={formulario.editora}
+                            onChange={atualizarCampo}
                         />
                     </div>
 
@@ -169,7 +230,7 @@ function Livros() {
                     <button
                         className="livros-refresh"
                         type="button"
-                        onClick={carregarDados}
+                        onClick={() => setVersaoLista((atual) => atual + 1)}
                         disabled={carregando}
                     >
                         {carregando ? 'Atualizando...' : 'Atualizar lista'}

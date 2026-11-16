@@ -2,9 +2,7 @@ import './style.css'
 
 function Footer() {
     return (
-        <>
-            Footer
-        </>
+        <footer className="site-footer">Biblioteca AEO</footer>
     )
 }
 

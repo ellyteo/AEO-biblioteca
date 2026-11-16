@@ -1,0 +1,68 @@
+.categorias-page {
+    padding: 24px;
+}
+
+.categorias-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.categoria-item {
+    min-width: 0;
+}
+
+.categoria-card {
+    display: grid;
+    width: 100%;
+    min-height: 150px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--social-bg);
+    box-shadow: var(--shadow);
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+
+.categoria-card:hover,
+.categoria-card:focus-visible {
+    border-color: var(--accent);
+}
+
+.categoria-card h2 {
+    margin: 0;
+}
+
+.categoria-card span,
+.categoria-livros span {
+    color: var(--text);
+    font-size: 13px;
+}
+
+.categoria-livros {
+    display: grid;
+    gap: 8px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.categoria-livros li {
+    display: grid;
+    gap: 5px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--social-bg);
+}
+
+@media (max-width: 520px) {
+    .categorias-page {
+        padding: 16px;
+    }
+}
