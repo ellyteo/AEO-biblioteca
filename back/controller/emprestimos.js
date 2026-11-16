@@ -58,7 +58,7 @@ class ControllerEmprestimos {
 
     async Deletar(req, res) {
         try {
-            const id = req.session.id
+            const id = req.params.id
 
             await ServiceEmprestimos.Deletar(id)
 

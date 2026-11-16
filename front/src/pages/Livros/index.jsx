@@ -5,9 +5,12 @@ import './style.css'
 const formularioInicial = {
     nome: '',
     idAutor: '',
+    idCategoria: '',
     ano: '',
     editora: '',
 }
+
+const chaveCategoriaLivro = (idLivro) => `biblioteca:livro:${idLivro}:categoria`
 
 function getRecords(response, label) {
     if (Array.isArray(response.data?.message)) {
@@ -24,6 +27,7 @@ function getErrorMessage(error, fallback) {
 function Livros() {
     const [livros, setLivros] = useState([])
     const [autores, setAutores] = useState([])
+    const [categorias, setCategorias] = useState([])
     const [formulario, setFormulario] = useState(formularioInicial)
     const [erro, setErro] = useState('')
     const [sucesso, setSucesso] = useState('')
@@ -42,13 +46,15 @@ function Livros() {
             setErro('')
 
             try {
-                const [respostaLivros, respostaAutores] = await Promise.all([
+                const [respostaLivros, respostaAutores, respostaCategorias] = await Promise.all([
                     api.get('/v1/livros/listar'),
                     api.get('/v1/autores/listar'),
+                    api.get('/v1/categorias/listar'),
                 ])
 
                 setLivros(getRecords(respostaLivros, 'livros'))
                 setAutores(getRecords(respostaAutores, 'autores'))
+                setCategorias(getRecords(respostaCategorias, 'categorias'))
             } catch (error) {
                 setErro(getErrorMessage(error, 'Não foi possível carregar os dados.'))
             } finally {
@@ -64,18 +70,46 @@ function Livros() {
         setErro('')
         setSucesso('')
         setSalvando(true)
+        let livroCadastrado = false
 
         try {
+            const livrosAnteriores = getRecords(await api.get('/v1/livros/listar'), 'livros')
+            const idsAnteriores = new Set(livrosAnteriores.map((livro) => String(livro.id)))
+
             await api.post('/v1/livros/criar', {
                 ...formulario,
                 ano: Number(formulario.ano),
             })
+            livroCadastrado = true
+
+            const livrosAtualizados = getRecords(await api.get('/v1/livros/listar'), 'livros')
+            const livroCriado = livrosAtualizados
+                .filter((livro) => (
+                    !idsAnteriores.has(String(livro.id))
+                    && livro.nome === formulario.nome
+                    && String(livro.idAutor) === String(formulario.idAutor)
+                    && Number(livro.ano) === Number(formulario.ano)
+                    && livro.editora === formulario.editora
+                ))
+                .sort((a, b) => Number(b.id) - Number(a.id))[0]
+
+            if (!livroCriado) {
+                throw new Error('O livro foi cadastrado, mas não foi possível associá-lo à categoria.')
+            }
+
+            localStorage.setItem(chaveCategoriaLivro(livroCriado.id), String(formulario.idCategoria))
 
             setFormulario(formularioInicial)
             setSucesso('Livro cadastrado com sucesso.')
             setVersaoLista((atual) => atual + 1)
         } catch (error) {
-            setErro(getErrorMessage(error, 'Não foi possível cadastrar o livro.'))
+            if (livroCadastrado) {
+                setFormulario(formularioInicial)
+                setVersaoLista((atual) => atual + 1)
+                setErro(`Livro cadastrado, mas a categoria não foi salva neste navegador. ${getErrorMessage(error, '')}`)
+            } else {
+                setErro(getErrorMessage(error, 'Não foi possível cadastrar o livro.'))
+            }
         } finally {
             setSalvando(false)
         }
@@ -127,6 +161,28 @@ function Livros() {
                         </select>
                         {!carregando && autores.length === 0 && (
                             <small className="livros-hint">Cadastre um autor antes de cadastrar um livro.</small>
+                        )}
+                    </div>
+
+                    <div className="livros-input-group">
+                        <label htmlFor="livro-categoria">Categoria:</label>
+                        <select
+                            id="livro-categoria"
+                            name="idCategoria"
+                            required
+                            value={formulario.idCategoria}
+                            onChange={atualizarCampo}
+                            disabled={carregando || categorias.length === 0}
+                        >
+                            <option value="" disabled>
+                                {carregando ? 'Carregando categorias...' : 'Selecione uma categoria'}
+                            </option>
+                            {categorias.map((categoria) => (
+                                <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
+                            ))}
+                        </select>
+                        {!carregando && categorias.length === 0 && (
+                            <small className="livros-hint">Selecione uma categoria para cadastrar um livro.</small>
                         )}
                     </div>
 

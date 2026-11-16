@@ -17,6 +17,9 @@ function DashBoard() {
                 <a href="/bibliotecario/categorias" className="dashboard-Button">
                     <h2>Categorias</h2>
                 </a>
+                <a href="/bibliotecario/emprestimos" className="dashboard-Button">
+                    <h2>Empréstimos</h2>
+                </a>
             </div>
         </main>
     )

@@ -7,6 +7,7 @@ import DashBoard from './pages/DashBoard'
 import Livros from './pages/Livros'
 import Autores from './pages/Autores'
 import Categorias from './pages/categorias'
+import Emprestimos from './pages/Emprestimos'
 import PrivateRoute from './routes/PrivateRoute'
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/bibliotecario/livros" element={<Livros />} />
           <Route path="/bibliotecario/autores" element={<Autores />} />
           <Route path="/bibliotecario/categorias" element={<Categorias />} />
+          <Route path="/bibliotecario/emprestimos" element={<Emprestimos />} />
         </Route>
       </Routes>
       <Footer />

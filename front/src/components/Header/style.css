@@ -1,0 +1,45 @@
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px clamp(16px, 4vw, 36px);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.site-header nav {
+    display: flex;
+    gap: 8px;
+}
+
+.site-header button {
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-h);
+    cursor: pointer;
+    font: inherit;
+}
+
+.site-header button:hover {
+    background: var(--accent-bg);
+}
+
+.site-header .site-brand {
+    color: var(--accent);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.site-header .site-logout {
+    color: var(--danger);
+}
+
+@media (max-width: 420px) {
+    .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

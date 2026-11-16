@@ -1,0 +1,17 @@
+.emprestimo-item {
+    align-items: center;
+}
+
+.emprestimo-delete {
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    background: var(--danger);
+    cursor: pointer;
+}
+
+.emprestimo-delete:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
