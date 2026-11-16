@@ -43,7 +43,7 @@ class ControllerAutores {
 
     async Alterar(req, res) {
         try {
-            const id = req.session.id
+            const id = req.params.id
             const { nome, biografia, genero, livros } = req.body
 
             await ServiceAutores.Alterar(id, nome, biografia, genero, livros)
@@ -58,7 +58,7 @@ class ControllerAutores {
 
     async Deletar(req, res) {
         try {
-            const id = req.session.id
+            const id = req.params.id
 
             await ServiceAutores.Deletar(id)
 
